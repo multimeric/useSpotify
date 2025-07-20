@@ -16,14 +16,20 @@ export type QueueReturn = {
  * @returns A tuple containing the queue, a function to pause the queue, and a function to restart the queue.
  */
 export function useQueue(concurrencyLimit: number = 5, pauseTime: number = 1000, onLoadingChange?: (loading: boolean) => void): QueueReturn {
-    const queue = useRef<PQueue>(null!);
+    const queue = useRef<PQueue>(new PQueue({ concurrency: concurrencyLimit }));
 
     useEffect(() => {
-        queue.current = new PQueue({ concurrency: concurrencyLimit });
+        if (concurrencyLimit != queue.current.concurrency) {
+            queue.current = new PQueue({ concurrency: concurrencyLimit });
+        }
         
         if (onLoadingChange) {
-            queue.current.on("add", () => onLoadingChange(true));
-            queue.current.on("idle", () => onLoadingChange(false));
+            queue.current.on("add", () => {
+                onLoadingChange(true)
+        });
+            queue.current.on("idle", () => {
+                onLoadingChange(false)
+        });
         }
     }, [concurrencyLimit, onLoadingChange]);
     // We only want one restart queued at a time

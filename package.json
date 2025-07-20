@@ -2,8 +2,12 @@
   "name": "usespotify",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "NODE_OPTIONS='--experimental-vm-modules' jest",
+    "test:watch": "NODE_OPTIONS='--experimental-vm-modules' jest --watch",
+    "test:coverage": "NODE_OPTIONS='--experimental-vm-modules' jest --coverage",
+    "test:ci": "NODE_OPTIONS='--experimental-vm-modules' jest --ci --coverage --watchAll=false"
   },
   "author": "",
   "license": "ISC",
@@ -11,9 +15,24 @@
   "dependencies": {
     "@spotify/web-api-ts-sdk": "^1.2.0",
     "@types/p-queue": "^3.1.0",
+    "p-queue": "^8.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "usehooks-ts": "^3.1.1"
   },
   "devDependencies": {
-    "@types/react": "^19.1.8"
+    "@jest/globals": "^30.0.4",
+    "@testing-library/dom": "^10.4.0",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.3.0",
+    "@types/jest": "^30.0.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "jest": "^30.0.4",
+    "jest-environment-jsdom": "^30.0.4",
+    "jsdom": "^26.1.0",
+    "ts-jest": "^29.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.8.3"
   }
 }

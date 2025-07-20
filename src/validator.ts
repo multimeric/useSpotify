@@ -9,7 +9,7 @@ export class SpotifyApiError extends Error {
 
 export const responseValidator: IValidateResponses = {
     validateResponse: async (response) => {
-        if (!response.status.toString().startsWith("20")) {
+        if (!response.status.toString().startsWith("2")) {
             throw new SpotifyApiError(response.statusText, response.status);
         }
     }

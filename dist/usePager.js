@@ -77,7 +77,7 @@ export function usePager(pager, queue, pageSize = 50, process = (item, offset) =
         const promises = [];
         for (let i = maxRequested.current; i < requestLimit; i += pageSize) {
             // Offset is block scoped, so it's stable in async calls
-            const offset = maxRequested.current;
+            const offset = i;
             promises.push(queue.queue.add(async () => {
                 const result = await requestPage(offset);
                 return result;

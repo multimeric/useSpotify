@@ -1,5 +1,5 @@
 import { renderHook, act, waitFor } from '@testing-library/react';
-import { usePager, Pager } from '../index';
+import { usePager, Pager } from '../usePager';
 import { SpotifyApiError } from '../validator';
 import { useQueue } from '../useQueue';
 import { jest } from '@jest/globals';

@@ -69,14 +69,14 @@ export function usePager<InputType, OutputType = InputType>(
                 // When we hit a rate limit, pause immediately
                 queue.pause();
                 // Re-queue the request (although it won't run immediately)
-                return queue.queue.add(() => requestPage(offset));
+                return queue.queue.add(() => requestPage(offset), { throwOnTimeout: true });
             }
             throw error;
         }
     }
 
     // We need to request the first page to know the total number of items
-    useEffect(() => { requestPage(0) }, [])
+    useEffect(() => { queue.queue.add(() => requestPage(0)) }, [])
 
     /**
      * Updates the page limit to load more pages.
@@ -105,7 +105,7 @@ export function usePager<InputType, OutputType = InputType>(
             promises.push(queue.queue.add(async () => {
                 const result = await requestPage(offset);
                 return result;
-            }));
+            }, {throwOnTimeout: true}));
         }
 
         // Wait until all pages are loaded, then return the new tracks
